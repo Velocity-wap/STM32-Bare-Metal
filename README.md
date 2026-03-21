@@ -32,5 +32,33 @@ Uses hardware interrupts — no polling.
 * EXTI PR (0x40010414) — clear pending flag in ISR
 * NVIC_ISER0 (0xE000E100) — enable EXTI0 IRQ (bit 6)
 * Software debounce delay in ISR to prevent multiple triggers per press
+
+# 03 - I2C Bare Metal
+
+I2C master write to SSD1306 OLED on STM32F103C8T6 (Blue Pill).
+
+## What it does
+* Configures PB6 (SCL) and PB7 (SDA) as alternate function open-drain
+* Sets up I2C1 at 100kHz standard mode
+* Generates START, sends slave address, sends dummy byte, generates STOP
+* Pending hardware test — requires 4.7kΩ pull-up resistors on SCL and SDA
+
+## Registers used
+* RCC APB2ENR (0x40021018) — enable GPIOB clock
+* RCC APB1ENR (0x4002101C) — enable I2C1 clock
+* GPIOB CRL (0x40010800) — configure PB6, PB7 as alternate function open-drain
+* I2C1 CR1 (0x40005000) — enable peripheral, generate START/STOP
+* I2C1 CR2 (0x40005004) — set APB1 clock frequency (8MHz)
+* I2C1 CCR (0x4000501C) — set I2C speed (100kHz)
+* I2C1 TRISE (0x40005020) — set max rise time
+* I2C1 DR (0x40005010) — send address and data bytes
+* I2C1 SR1 (0x40005014) — check SB, ADDR, TXE flags
+* I2C1 SR2 (0x40005018) — clear ADDR flag
   
+## Toolchain
+- Compiler: arm-none-eabi-gcc
+- Build: make
+- Flash: ST-Link V2 + OpenOCD
+- Editor: VSCode
+
 ## No HAL, no libraries — direct register access only
