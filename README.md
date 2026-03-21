@@ -1,27 +1,29 @@
-# 01 - Bare Metal LED Blink
+# STM32-Bare-Metal
+
+## 01 - Bare Metal LED Blink
 Blinks onboard LED on PC13 of STM32F103C8T6 (Blue Pill).
 
-## What it does
+### What it does
 - Enables GPIOC clock via RCC APB2ENR
 - Configures PC13 as push-pull output via GPIOC CRH
 - Toggles PC13 via GPIOC ODR in an infinite loop
 
-## Registers used
+### Registers used
 - RCC APB2ENR (0x40021018) — enable GPIOC clock, bit 4
 - GPIOC CRH (0x40011004) — configure PC13 as output
 - GPIOC ODR (0x4001100C) — toggle PC13 HIGH/LOW
   
-# 02 - Interrupts (WIP)
+## 02 - Interrupts (WIP)
 Button press on PA0 toggles onboard LED on PC13 of STM32F103C8T6 (Blue Pill).
 Uses hardware interrupts — no polling.
 
-## What it does
+### What it does
 * Configures PA0 as floating input for button
 * Configures PC13 as push-pull output for LED
 * Triggers interrupt on falling edge (button press pulls PA0 LOW)
 * ISR toggles PC13 and clears pending flag
 
-## Registers used
+### Registers used
 * RCC APB2ENR (0x40021018) — enable GPIOA, GPIOC, AFIO clocks
 * GPIOC CRH (0x40011004) — configure PC13 as push-pull output
 * GPIOC ODR (0x4001100C) — toggle PC13
@@ -33,17 +35,17 @@ Uses hardware interrupts — no polling.
 * NVIC_ISER0 (0xE000E100) — enable EXTI0 IRQ (bit 6)
 * Software debounce delay in ISR to prevent multiple triggers per press
 
-# 03 - I2C Bare Metal
+## 03 - I2C Bare Metal
 
 I2C master write to SSD1306 OLED on STM32F103C8T6 (Blue Pill).
 
-## What it does
+### What it does
 * Configures PB6 (SCL) and PB7 (SDA) as alternate function open-drain
 * Sets up I2C1 at 100kHz standard mode
 * Generates START, sends slave address, sends dummy byte, generates STOP
 * Pending hardware test — requires 4.7kΩ pull-up resistors on SCL and SDA
 
-## Registers used
+### Registers used
 * RCC APB2ENR (0x40021018) — enable GPIOB clock
 * RCC APB1ENR (0x4002101C) — enable I2C1 clock
 * GPIOB CRL (0x40010800) — configure PB6, PB7 as alternate function open-drain
