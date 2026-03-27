@@ -1,0 +1,8 @@
+# Ignore all assembly files from language stats
+*.s linguist-detectable=false
+
+# Ignore all linker scripts
+*.ld linguist-detectable=false
+
+# Ensure all header files are treated as C
+*.h linguist-language=C
