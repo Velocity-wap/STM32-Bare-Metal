@@ -1,5 +1,5 @@
 /*
- * 04_TIMRES: Button on PA0 toggles LED on PC13
+ * 04_TIMRES
  * Bare metal - zero HAL - direct register access
  * STM32F103C8T6
  */
